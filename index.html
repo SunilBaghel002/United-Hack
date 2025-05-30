@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>United Hack</title>
+    <!-- Google Fonts for Orbitron and Poppins -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- GSAP ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- AOS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #010101;
+        color: #ffffff;
+        overflow-x: hidden;
+      }
+
+      /* Progress Bar */
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: #5b19e3;
+        width: 0;
+        z-index: 100;
+        transition: width 0.3s ease;
+      }
+
+      /* Loading Animation */
+      #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #010101;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      #loader h1 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 3rem;
+        color: #5b19e3;
+        text-shadow: 0 0 15px #5b19e3;
+        animation: neonPulse 1.5s infinite alternate;
+      }
+
+      @keyframes neonPulse {
+        0% {
+          text-shadow: 0 0 8px #5b19e3, 0 0 15px #5b19e3;
+        }
+        100% {
+          text-shadow: 0 0 15px #5b19e3, 0 0 30px #5b19e3;
+        }
+      }
+
+      /* Header */
+      header {
+        background: rgba(1, 1, 1, 0.8);
+        backdrop-filter: blur(10px);
+        color: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+      }
+
+      nav h1 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.8rem;
+        color: #5b19e3;
+        text-shadow: 0 0 8px #5b19e3;
+        white-space: nowrap;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 1rem;
+      }
+
+      .nav-links li a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: color 0.3s, background 0.3s, transform 0.3s;
+      }
+
+      .nav-links li a:hover {
+        color: #010101;
+        background: #5b19e3;
+        transform: translateY(-2px);
+        box-shadow: 0 0 10px #5b19e3;
+      }
+
+      .hamburger {
+        display: none;
+        font-size: 1.5rem;
+        color: #5b19e3;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+
+      .hamburger:hover {
+        transform: scale(1.2);
+      }
+
+      /* Hero Section */
+      #home {
+        background: linear-gradient(135deg, #1e172c, #010101);
+        color: #ffffff;
+        padding: 8rem 1.5rem 5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      #home canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        opacity: 0.4;
+      }
+
+      #home .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      #home h2 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 12px #5b19e3;
+      }
+
+      #home p {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .timer {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .timer div {
+        background: rgba(255, 255, 255, 0.1);
+        color: #5b19e3;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 8px rgba(91, 25, 227, 0.4);
+        backdrop-filter: blur(5px);
+        min-width: 101px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .timer div:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 12px rgba(91, 25, 227, 0.6);
+      }
+
+      .timer div span {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+
+      .btn {
+        display: inline-block;
+        background: #5b19e3;
+        color: #ffffff;
+        font-weight: 500;
+        padding: 0.8rem 2rem;
+        border-radius: 9999px;
+        text-decoration: none;
+        box-shadow: 0 0 10px #5b19e3;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px #5b19e3;
+      }
+
+      /* Section Common Styles */
+      section {
+        padding: 5rem 1.5rem;
+        text-align: center;
+      }
+
+      section h2 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 2.2rem;
+        color: #5b19e3;
+        text-shadow: 0 0 8px #5b19e3;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      section h2 i {
+        font-size: 1.8rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      section h2:hover i {
+        transform: rotate(20deg) scale(1.2);
+        color: #ffffff;
+      }
+
+      /* About Section */
+      #about {
+        background: #010101;
+      }
+
+      #about p {
+        font-size: 1.1rem;
+        color: #ffffff;
+        max-width: 800px;
+        margin: 0 auto 1.5rem;
+      }
+
+      .about-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(91, 25, 227, 0.2);
+        box-shadow: 0 0 10px rgba(91, 25, 227, 0.15);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 20px rgba(91, 25, 227, 0.3);
+      }
+
+      .feature-card i {
+        font-size: 2rem;
+        color: #5b19e3;
+        margin-bottom: 0.8rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .feature-card:hover i {
+        transform: scale(1.2) rotate(15deg);
+        color: #ffffff;
+      }
+
+      .feature-card h3 {
+        font-size: 1.3rem;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+      }
+
+      .feature-card p {
+        font-size: 0.9rem;
+        color: #cccccc;
+      }
+
+      /* Prizes Section */
+      #prizes {
+        background: linear-gradient(to right, #1e172c, #010101);
+      }
+
+      #prizes p {
+        font-size: 1.3rem;
+        max-width: 700px;
+        margin: 0 auto 1.5rem;
+      }
+
+      .prize-reveal {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(91, 25, 227, 0.2);
+        box-shadow: 0 0 10px rgba(91, 25, 227, 0.2);
+        backdrop-filter: blur(8px);
+        max-width: 500px;
+        margin: 0 auto;
+        transition: transform 0.3s;
+      }
+
+      .prize-reveal:hover {
+        transform: scale(1.05);
+      }
+
+      /* Judging Criteria Section */
+      #judging {
+        background: #010101;
+      }
+
+      .criteria-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .criteria-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(91, 25, 227, 0.2);
+        box-shadow: 0 0 10px rgba(91, 25, 227, 0.15);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .criteria-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 20px rgba(91, 25, 227, 0.3);
+      }
+
+      .criteria-card i {
+        font-size: 2rem;
+        color: #5b19e3;
+        margin-bottom: 0.8rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .criteria-card:hover i {
+        transform: scale(1.2) rotate(15deg);
+        color: #ffffff;
+      }
+
+      .criteria-card h3 {
+        font-size: 1.3rem;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+      }
+
+      .criteria-card p {
+        font-size: 0.9rem;
+        color: #cccccc;
+      }
+
+      /* Timeline Section */
+      #timeline {
+        background: #010101;
+      }
+
+      .timeline-container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .timeline-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        position: relative;
+      }
+
+      .timeline-item:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      .timeline-content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(91, 25, 227, 0.2);
+        box-shadow: 0 0 10px rgba(91, 25, 227, 0.15);
+        width: 45%;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .timeline-content:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(91, 25, 227, 0.3);
+      }
+
+      .timeline-content i {
+        font-size: 1.8rem;
+        color: #5b19e3;
+        margin-bottom: 0.5rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .timeline-content:hover i {
+        transform: rotate(20deg);
+        color: #ffffff;
+      }
+
+      .timeline-content h3 {
+        font-size: 1.3rem;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-content p {
+        font-size: 0.9rem;
+        color: #ffffff;
+      }
+
+      .timeline-dot {
+        width: 15px;
+        height: 15px;
+        background: #5b19e3;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+        box-shadow: 0 0 8px #5b19e3;
+        transition: transform 0.3s;
+      }
+
+      .timeline-dot:hover {
+        transform: translateX(-50%) scale(1.5);
+      }
+
+      .timeline-line {
+        position: absolute;
+        width: 3px;
+        background: #5b19e3;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 0 6px #5b19e3;
+      }
+
+      /* Eligibility Section */
+      #eligibility {
+        background: #010101;
+      }
+
+      #eligibility ul {
+        list-style: none;
+        font-size: 1.1rem;
+        color: #ffffff;
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      #eligibility ul li {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      #eligibility ul li i {
+        color: #5b19e3;
+        font-size: 1.2rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      #eligibility ul li:hover i {
+        transform: scale(1.3);
+        color: #ffffff;
+      }
+
+      /* Themes Section */
+      #themes {
+        background: #010101;
+      }
+
+      #themes p {
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto 1.5rem;
+        color: #ffffff;
+      }
+
+      .themes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .theme-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(91, 25, 227, 0.2);
+        box-shadow: 0 0 10px rgba(91, 25, 227, 0.15);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .theme-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 20px rgba(91, 25, 227, 0.3);
+      }
+
+      .theme-card i {
+        font-size: 2rem;
+        color: #5b19e3;
+        margin-bottom: 0.8rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .theme-card:hover i {
+        transform: scale(1.2) rotate(15deg);
+        color: #ffffff;
+      }
+
+      .theme-card h3 {
+        font-size: 1.3rem;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+      }
+
+      .theme-card p {
+        font-size: 0.9rem;
+        color: #cccccc;
+      }
+
+      /* Mentors Section */
+      #mentors {
+        background: #010101;
+      }
+
+      .mentor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .mentor-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(91, 25, 227, 0.2);
+        box-shadow: 0 0 10px rgba(91, 25, 227, 0.15);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .mentor-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 20px rgba(91, 25, 227, 0.3);
+      }
+
+      .mentor-card i {
+        font-size: 2rem;
+        color: #5b19e3;
+        margin-bottom: 0.8rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .mentor-card:hover i {
+        transform: scale(1.2) rotate(15deg);
+        color: #ffffff;
+      }
+
+      .mentor-card h3 {
+        font-size: 1.3rem;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+      }
+
+      .mentor-card p {
+        font-size: 0.9rem;
+        color: #cccccc;
+      }
+
+      /* Registration Section */
+      #register {
+        background: linear-gradient(to right, #1e172c, #010101);
+      }
+
+      #register p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #register .note {
+        font-size: 0.8rem;
+        margin-top: 1rem;
+        color: #cccccc;
+      }
+
+      /* FAQ Section */
+      #faq {
+        background: #010101;
+      }
+
+      .faq-item {
+        max-width: 700px;
+        margin: 0 auto 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(91, 25, 227, 0.2);
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .faq-item:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 15px rgba(91, 25, 227, 0.3);
+      }
+
+      .faq-item h3 {
+        font-size: 1.3rem;
+        color: #5b19e3;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .faq-item h3 i {
+        font-size: 1.2rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .faq-item:hover h3 i {
+        transform: rotate(20deg);
+        color: #ffffff;
+      }
+
+      .faq-item p {
+        font-size: 1rem;
+        color: #ffffff;
+        display: none;
+      }
+
+      .faq-item.active p {
+        display: block;
+      }
+
+      /* Footer */
+      footer {
+        background: linear-gradient(135deg, #010101, #1e172c);
+        color: #ffffff;
+        padding: 4rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 -4px 15px rgba(91, 25, 227, 0.3);
+      }
+
+      footer canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        z-index: 0;
+      }
+
+      footer .footer-content {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2rem;
+      }
+
+      footer h3 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.5rem;
+        color: #ffffff;
+        text-shadow: 0 0 10px #5b19e3;
+        margin-bottom: 1rem;
+      }
+
+      footer .quick-links ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem 1rem;
+        list-style: none;
+      }
+
+      footer ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      footer ul li a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s, transform 0.3s;
+      }
+
+      footer ul li a:hover {
+        color: #5b19e3;
+        transform: translateX(5px);
+      }
+
+      footer .social-links a {
+        color: #ffffff;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+        padding: 0.5rem;
+        border-radius: 50%;
+        background: rgba(91, 25, 227, 0.2);
+      }
+
+      footer .social-links a:hover {
+        color: #5b19e3;
+        transform: scale(1.2);
+        background: #ffffff;
+        box-shadow: 0 0 10px #5b19e3;
+      }
+
+      footer .newsletter p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      footer .newsletter input {
+        padding: 0.7rem;
+        border: none;
+        border-radius: 0.5rem;
+        background: #2d3748;
+        color: #ffffff;
+        width: 100%;
+        max-width: 220px;
+        margin-bottom: 0.7rem;
+        transition: box-shadow 0.3s;
+      }
+
+      footer .newsletter input:focus {
+        outline: none;
+        box-shadow: 0 0 8px #5b19e3;
+      }
+
+      footer .newsletter .btn {
+        padding: 0.7rem 2rem;
+      }
+
+      footer .copyright {
+        text-align: center;
+        margin-top: 3rem;
+        font-size: 0.9rem;
+        color: #cccccc;
+        text-shadow: 0 0 5px rgba(91, 25, 227, 0.5);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 60px;
+          right: 0;
+          background: rgba(1, 1, 1, 0.95);
+          backdrop-filter: blur(10px);
+          width: 100%;
+          padding: 1rem;
+          z-index: 40;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .nav-links li a {
+          font-size: 1rem;
+          padding: 0.8rem;
+        }
+
+        #home h2 {
+          font-size: 2.2rem;
+        }
+
+        #home p {
+          font-size: 1.1rem;
+        }
+
+        .timer div span {
+          font-size: 1.5rem;
+        }
+
+        nav h1 {
+          font-size: 1.5rem;
+        }
+
+        section h2 {
+          font-size: 1.8rem;
+        }
+
+        section h2 i {
+          font-size: 1.5rem;
+        }
+
+        .about-features,
+        .criteria-grid,
+        .themes-grid,
+        .mentor-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .timeline-item,
+        .timeline-item:nth-child(even) {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .timeline-content {
+          width: 100%;
+        }
+
+        footer .footer-content {
+          grid-template-columns: 1fr;
+        }
+
+        footer .quick-links ul {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #home h2 {
+          font-size: 1.8rem;
+        }
+
+        #home p {
+          font-size: 1rem;
+        }
+
+        .timer div {
+          min-width: 60px;
+          padding: 0.8rem;
+        }
+
+        .timer div span {
+          font-size: 1.2rem;
+        }
+
+        section {
+          padding: 3rem 1rem;
+        }
+
+        section h2 {
+          font-size: 1.5rem;
+        }
+
+        .feature-card,
+        .criteria-card,
+        .theme-card,
+        .mentor-card {
+          padding: 1rem;
+        }
+
+        footer {
+          padding: 3rem 1rem;
+        }
+
+        footer h3 {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- Loader -->
+    <div id="loader">
+      <h1>United Hack Loading...</h1>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <nav>
+        <h1>United Hack</h1>
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#register">Register</a></li>
+          <li class="mobile-only"><a href="#about">About</a></li>
+          <li class="mobile-only"><a href="#prizes">Prizes</a></li>
+          <li class="mobile-only"><a href="#judging">Judging</a></li>
+          <li class="mobile-only"><a href="#timeline">Timeline</a></li>
+          <li class="mobile-only"><a href="#eligibility">Eligibility</a></li>
+          <li class="mobile-only"><a href="#themes">Themes</a></li>
+          <!-- <li class="mobile-only"><a href="#mentors">Mentors</a></li>
+          <li class="mobile-only"><a href="#faq">FAQ</a></li> -->
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+      <canvas id="particles"></canvas>
+      <div class="hero-content">
+        <h2 id="hero-title"><i class="fas fa-code"></i> United Hack 2025</h2>
+        <p id="hero-subtitle">
+          Code the Future: Innovate, Collaborate, Triumph!
+        </p>
+        <p id="hero-text">
+          Join our global online hackathon to build groundbreaking web
+          applications, tackle real-world challenges, and compete for a ₹20,000
+          prize pool! Only 200 INR per team (2-4 members).
+        </p>
+        <div class="timer">
+          <div><span id="days">0</span><br />Days</div>
+          <div><span id="hours">0</span><br />Hours</div>
+          <div><span id="minutes">0</span><br />Minutes</div>
+          <div><span id="seconds">0</span><br />Seconds</div>
+        </div>
+        <a href="#register" class="btn" id="hero-btn">Register Now</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" data-aos="fade-up">
+      <h2><i class="fas fa-info-circle"></i> About United Hack</h2>
+      <p>
+        United Hack 2025 is a 36-hour online coding extravaganza that unites
+        developers, designers, and innovators worldwide. Hosted on Discord and
+        Zoom, this event challenges teams to create innovative web applications
+        solving real-world problems. With a ₹20,000 prize pool and expert
+        mentorship, United Hack is your platform to shine!
+      </p>
+      <div class="about-features" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card">
+          <i class="fas fa-rocket"></i>
+          <h3>Innovate</h3>
+          <p>
+            Build cutting-edge web apps using any frontend tech to solve unique
+            challenges.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-users-gear"></i>
+          <h3>Collaborate</h3>
+          <p>
+            Form teams of 2-4 to brainstorm, code, and learn from a global
+            community.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-star"></i>
+          <h3>Triumph</h3>
+          <p>
+            Compete for exciting prizes, recognition, and a chance to showcase
+            your skills.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prizes Section -->
+    <section id="prizes" data-aos="fade-up">
+      <h2><i class="fas fa-trophy"></i> Prizes</h2>
+      <p>₹20,000 Prize Pool Awaits!</p>
+      <div class="prize-reveal" data-aos="zoom-in" data-aos-delay="200">
+        <p>
+          Our prize lineup, including cash rewards, premium tech subscriptions,
+          and exclusive perks, will be unveiled just before the hackathon starts
+          on June 12, 2025.
+        </p>
+      </div>
+    </section>
+
+    <!-- Judging Criteria Section -->
+    <section id="judging" data-aos="fade-up">
+      <h2><i class="fas fa-gavel"></i> Judging Criteria</h2>
+      <div class="criteria-grid">
+        <div class="criteria-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Innovation</h3>
+          <p>
+            How creative and original is your solution? Does it address a unique
+            problem?
+          </p>
+        </div>
+        <div class="criteria-card" data-aos="fade-up" data-aos-delay="300">
+          <i class="fas fa-cogs"></i>
+          <h3>Functionality</h3>
+          <p>
+            Is your web application fully functional with no broken features?
+          </p>
+        </div>
+        <div class="criteria-card" data-aos="fade-up" data-aos-delay="400">
+          <i class="fas fa-paint-brush"></i>
+          <h3>Design</h3>
+          <p>
+            Is the UI/UX intuitive, visually stunning, and responsive across
+            devices?
+          </p>
+        </div>
+        <div class="criteria-card" data-aos="fade-up" data-aos-delay="500">
+          <i class="fas fa-globe"></i>
+          <h3>Impact</h3>
+          <p>
+            Does your solution have the potential to make a significant
+            real-world impact?
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" data-aos="fade-up">
+      <h2><i class="fas fa-clock"></i> Hackathon Timeline</h2>
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+          <div class="timeline-content">
+            <i class="fas fa-calendar-check"></i>
+            <h3>June 11, 2025</h3>
+            <p>
+              Registration closes at 11:59 PM IST. Themes announced at 9:00 PM
+              IST via Discord.
+            </p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item" data-aos="fade-left" data-aos-delay="300">
+          <div class="timeline-content">
+            <i class="fas fa-play-circle"></i>
+            <h3>June 12, 2025</h3>
+            <p>Hackathon kicks off at 10:00 AM IST with a live Zoom event.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="400">
+          <div class="timeline-content">
+            <i class="fas fa-upload"></i>
+            <h3>June 13, 2025</h3>
+            <p>Submissions due by 6:00 PM IST. Judging begins immediately.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item" data-aos="fade-left" data-aos-delay="500">
+          <div class="timeline-content">
+            <i class="fas fa-trophy"></i>
+            <h3>June 14, 2025</h3>
+            <p>Winners announced at 6:00 PM IST via live stream on Zoom.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eligibility Section -->
+    <section id="eligibility" data-aos="fade-up">
+      <h2><i class="fas fa-user-check"></i> Eligibility Criteria</h2>
+      <ul>
+        <li>
+          <i class="fas fa-check-circle"></i> Participants must be at least 16
+          years old.
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i> Teams must consist of 2-4 members.
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i> Open to students, professionals,
+          and hobbyists worldwide.
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i> Participants must register and pay
+          the 200 INR team fee by June 11, 2025.
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i> All team members must adhere to
+          the code of conduct shared on Discord.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Themes Section -->
+    <section id="themes" data-aos="fade-up">
+      <h2><i class="fas fa-lightbulb"></i> Project Themes</h2>
+      <p>
+        Choose from these exciting themes to guide your project during United
+        Hack:
+      </p>
+      <div class="themes-grid">
+        <div class="theme-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="fas fa-code"></i>
+          <h3>Web Development</h3>
+          <p>
+            Create innovative, responsive web applications using modern
+            frameworks and technologies.
+          </p>
+        </div>
+        <div class="theme-card" data-aos="fade-up" data-aos-delay="300">
+          <i class="fas fa-link"></i>
+          <h3>Blockchain</h3>
+          <p>
+            Develop decentralized solutions for secure transactions, smart
+            contracts, or data integrity.
+          </p>
+        </div>
+        <div class="theme-card" data-aos="fade-up" data-aos-delay="400">
+          <i class="fas fa-brain"></i>
+          <h3>AI/ML</h3>
+          <p>
+            Build intelligent applications using machine learning, NLP, or
+            computer vision.
+          </p>
+        </div>
+        <div class="theme-card" data-aos="fade-up" data-aos-delay="500">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Open Innovation</h3>
+          <p>
+            Design creative solutions for any real-world problem with no tech
+            restrictions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mentors Section -->
+    <!-- <section id="mentors" data-aos="fade-up">
+      <h2><i class="fas fa-user-tie"></i> Our Mentors</h2>
+      <div class="mentor-grid">
+        <div class="mentor-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="fas fa-code"></i>
+          <h3>Dr. Priya Sharma</h3>
+          <p>
+            Senior Software Engineer at TechCorp, expert in web development.
+          </p>
+        </div>
+        <div class="mentor-card" data-aos="fade-up" data-aos-delay="300">
+          <i class="fas fa-paint-brush"></i>
+          <h3>Rahul Patel</h3>
+          <p>UI/UX Designer with 10+ years of experience in startups.</p>
+        </div>
+        <div class="mentor-card" data-aos="fade-up" data-aos-delay="400">
+          <i class="fas fa-brain"></i>
+          <h3>Anita Desai</h3>
+          <p>Data Scientist and AI specialist, passionate about mentoring.</p>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Registration Section -->
+    <section id="register" data-aos="fade-up">
+      <h2><i class="fas fa-user-plus"></i> Register Your Team</h2>
+      <p>
+        Ready to compete? Register your team of 2-4 members for just 200 INR.
+        Join our 36-hour coding challenge, connect with mentors, and showcase
+        your skills on a global stage.
+      </p>
+      <a href="https://example.com/payment" target="_blank" class="btn"
+        >Pay & Register Now</a
+      >
+      <p class="note">
+        Note: You will be redirected to our secure payment and registration
+        portal.
+      </p>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" data-aos="fade-up">
+      <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+      <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+        <h3><i class="fas fa-users"></i> Who can participate?</h3>
+        <p>
+          Anyone passionate about coding, aged 16+, can join. Teams must have
+          2-4 members.
+        </p>
+      </div>
+      <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+        <h3><i class="fas fa-laptop-code"></i> What should we build?</h3>
+        <p>
+          Create a functional web application addressing a real-world problem.
+          Use any frontend tech; mock data is allowed.
+        </p>
+      </div>
+      <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+        <h3><i class="fas fa-upload"></i> How do we submit our project?</h3>
+        <p>
+          Host your app on a live URL (e.g., Netlify, Vercel) and submit the
+          link with your public GitHub repository by 6:00 PM IST on June 13,
+          2025.
+        </p>
+      </div>
+      <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+        <h3>
+          <i class="fas fa-rupee-sign"></i> Is the fee per person or per team?
+        </h3>
+        <p>The 200 INR fee is per team, not per person.</p>
+      </div>
+      <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+        <h3><i class="fas fa-code"></i> Can we use pre-existing code?</h3>
+        <p>
+          No, all code must be written during the hackathon. Open-source
+          libraries or frameworks are allowed.
+        </p>
+      </div>
+      <div class="faq-item" data-aos="fade-up" data-aos-delay="700">
+        <h3>
+          <i class="fas fa-headset"></i> What if we face technical issues?
+        </h3>
+        <p>
+          Join our Discord server for real-time support from mentors and
+          organizers.
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <canvas id="footer-particles"></canvas>
+      <div class="footer-content">
+        <div>
+          <h3>United Hack</h3>
+          <p>
+            Join the global coding revolution. Build innovative solutions and
+            compete for glory!
+          </p>
+          <div class="social-links">
+            <a href="https://twitter.com" target="_blank" class="social-link"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="https://discord.com" target="_blank" class="social-link"
+              ><i class="fab fa-discord"></i
+            ></a>
+            <a href="https://linkedin.com" target="_blank" class="social-link"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+          </div>
+        </div>
+        <div class="quick-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#prizes">Prizes</a></li>
+            <li><a href="#judging">Judging</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#eligibility">Eligibility</a></li>
+            <li><a href="#themes">Themes</a></li>
+            <!-- <li><a href="#mentors">Mentors</a></li> -->
+            <li><a href="#register">Register</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact Us</h3>
+          <ul>
+            <li>
+              Email:
+              <a href="mailto:support@unitedhack.com">support@unitedhack.com</a>
+            </li>
+            <li>Discord: Join our server for real-time updates</li>
+            <li>Phone: +91 987-654-3210</li>
+          </ul>
+        </div>
+        <div class="newsletter">
+          <h3>Stay Updated</h3>
+          <p>Subscribe for the latest hackathon news and updates.</p>
+          <input type="email" placeholder="Your email" />
+          <a href="#" class="btn">Subscribe</a>
+        </div>
+      </div>
+      <p class="copyright">© 2025 United Hack. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Ensure DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize AOS
+        AOS.init({
+          duration: 800,
+          once: true,
+          offset: 100,
+        });
+
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+        let isMenuOpen = false;
+
+        hamburger.addEventListener("click", () => {
+          isMenuOpen = !isMenuOpen;
+          navLinks.classList.toggle("active", isMenuOpen);
+          gsap.to(navLinks, {
+            duration: 0.4,
+            x: isMenuOpen ? 0 : "100%",
+            opacity: isMenuOpen ? 1 : 0,
+            ease: "power3.out",
+          });
+          gsap.to(hamburger, {
+            duration: 0.4,
+            rotate: isMenuOpen ? 90 : 0,
+            ease: "power3.out",
+          });
+        });
+
+        // Smooth Scroll for Nav Links
+        document.querySelectorAll(".nav-links a").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
+            gsap.to(window, {
+              duration: 1,
+              scrollTo: {
+                y: targetSection,
+                offsetY: 60,
+              },
+              ease: "power3.out",
+              onComplete: () => {
+                if (isMenuOpen) {
+                  hamburger.click();
+                }
+              },
+            });
+          });
+        });
+
+        // Progress Bar
+        const progressBar = document.getElementById("progress-bar");
+        window.addEventListener("scroll", () => {
+          const scrollTop = window.scrollY;
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+          progressBar.style.width = `${scrollPercent}%`;
+        });
+
+        // Loader Animation
+        window.addEventListener("load", () => {
+          gsap.to("#loader", {
+            duration: 1,
+            opacity: 0,
+            scale: 1.1,
+            ease: "power4.out",
+            onComplete: () => {
+              document.getElementById("loader").style.display = "none";
+            },
+          });
+        });
+
+        // Hero Section Particle Background
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2 + 1,
+            speedX: (Math.random() - 0.5) * 0.6,
+            speedY: (Math.random() - 0.5) * 0.6,
+          });
+        }
+        function animateParticles() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach((p) => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(91, 25, 227, 0.5)";
+            ctx.fill();
+            p.x += p.speedX;
+            p.y += p.speedY;
+            if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+          });
+          requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Footer Particle Background
+        const footerCanvas = document.getElementById("footer-particles");
+        const footerCtx = footerCanvas.getContext("2d");
+        footerCanvas.width = window.innerWidth;
+        footerCanvas.height = document.querySelector("footer").offsetHeight;
+        const footerParticles = [];
+        for (let i = 0; i < 50; i++) {
+          footerParticles.push({
+            x: Math.random() * footerCanvas.width,
+            y: Math.random() * footerCanvas.height,
+            radius: Math.random() * 2 + 1,
+            speedX: (Math.random() - 0.5) * 0.5,
+            speedY: (Math.random() - 0.5) * 0.5,
+          });
+        }
+        function animateFooterParticles() {
+          footerCtx.clearRect(0, 0, footerCanvas.width, footerCanvas.height);
+          footerParticles.forEach((p) => {
+            footerCtx.beginPath();
+            footerCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            footerCtx.fillStyle = "rgba(91, 25, 227, 0.4)";
+            footerCtx.fill();
+            p.x += p.speedX;
+            p.y += p.speedY;
+            if (p.x < 0 || p.x > footerCanvas.width) p.speedX *= -1;
+            if (p.y < 0 || p.y > footerCanvas.height) p.speedY *= -1;
+          });
+          requestAnimationFrame(animateFooterParticles);
+        }
+        animateFooterParticles();
+
+        // GSAP Animations with ScrollTrigger
+        // gsap.from("#hero-title", {
+        //   duration: 1,
+        //   y: 100,
+        //   opacity: 0,
+        //   ease: "power4.out",
+        // });
+        // gsap.from("#hero-subtitle", {
+        //   duration: 1,
+        //   y: 100,
+        //   opacity: 0,
+        //   delay: 0.2,
+        //   ease: "power4.out",
+        // });
+        // gsap.from("#hero-text", {
+        //   duration: 1,
+        //   y: 100,
+        //   opacity: 0,
+        //   delay: 0.4,
+        //   ease: "power4.out",
+        // });
+        // gsap.from(".timer div", {
+        //   duration: 1.2,
+        //   scale: 0,
+        //   opacity: 0,
+        //   delay: 0.6,
+        //   stagger: 0.2,
+        //   ease: "elastic.out(1, 0.5)",
+        // });
+        // gsap.from("#hero-btn", {
+        //   duration: 1,
+        //   y: 100,
+        //   opacity: 0,
+        //   delay: 1,
+        //   ease: "power4.out",
+        // });
+
+        // gsap.utils.toArray("section").forEach((section) => {
+        //   gsap.from(
+        //     section.querySelectorAll(
+        //       ".feature-card, .criteria-card, .timeline-item, .theme-card, .mentor-card, .faq-item"
+        //     ),
+        //     {
+        //       scrollTrigger: {
+        //         trigger: section,
+        //         start: "top 80%",
+        //         toggleActions: "play none none none",
+        //       },
+        //       duration: 0.8,
+        //       y: 80,
+        //       opacity: 0,
+        //       stagger: 0.2,
+        //       ease: "power3.out",
+        //     }
+        //   );
+        // });
+
+        // Anime.js for Navigation Links and Icons
+        // anime({
+        //   targets: ".nav-links li a",
+        //   translateY: [-20, 0],
+        //   opacity: [0, 1],
+        //   delay: anime.stagger(100, { start: 500 }),
+        //   duration: 600,
+        //   easing: "easeOutQuad",
+        // });
+        // anime({
+        //   targets:
+        //     ".feature-card i, .criteria-card i, .theme-card i, .mentor-card i, .timeline-content i, #eligibility ul li i, .faq-item h3 i",
+        //   scale: [0, 1],
+        //   rotate: "0.5turn",
+        //   opacity: [0, 1],
+        //   delay: anime.stagger(100),
+        //   duration: 800,
+        //   easing: "easeOutElastic",
+        // });
+        // anime({
+        //   targets: ".social-link",
+        //   translateY: [-20, 0],
+        //   opacity: [0, 1],
+        //   delay: anime.stagger(100, { start: 800 }),
+        //   duration: 600,
+        //   easing: "easeOutQuad",
+        // });
+
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            const isActive = item.classList.toggle("active");
+            const answer = item.querySelector("p");
+            gsap.to(answer, {
+              duration: 0.3,
+              opacity: isActive ? 1 : 0,
+              height: isActive ? "auto" : 0,
+              ease: "power2.out",
+            });
+          });
+        });
+
+        // Countdown Timer
+        function updateTimer() {
+          const targetDate = new Date("2025-06-12T10:00:00");
+          const now = new Date();
+          const diff = targetDate - now;
+
+          if (diff <= 0) {
+            document.getElementById("days").textContent = "0";
+            document.getElementById("hours").textContent = "0";
+            document.getElementById("minutes").textContent = "0";
+            document.getElementById("seconds").textContent = "0";
+            return;
+          }
+
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+          document.getElementById("days").textContent = days;
+          document.getElementById("hours").textContent = hours;
+          document.getElementById("minutes").textContent = minutes;
+          document.getElementById("seconds").textContent = seconds;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // Resize Canvases on Window Resize
+        window.addEventListener("resize", () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          footerCanvas.width = window.innerWidth;
+          footerCanvas.height = document.querySelector("footer").offsetHeight;
+        });
+      });
+    </script>
+  </body>
+</html>
